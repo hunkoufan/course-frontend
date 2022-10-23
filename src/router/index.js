@@ -130,13 +130,13 @@ export const constantRoutes = [
       //   meta: { title: '编辑大纲' },
       //   hidden: true
       // },
-      // {
-      //   path: 'course/chart/:id',
-      //   name: 'CourseChart',
-      //   component: () => import('@/views/vod/course/chart'),
-      //   meta: { title: '课程统计' },
-      //   hidden: true
-      // },
+      {
+        path: 'chart/:id',
+        name: 'CourseChart',
+        component: () => import('@/views/course/chart'),
+        meta: { title: '课程统计' },
+        hidden: true
+      },
     ]
   },
 

@@ -32,5 +32,11 @@ export default {
       url: `${BASE}/remove/${id}`,
       method: 'delete'
     })
+  },
+  findCount(courseId, startDate, endDate) {
+    return request({
+      url: `${BASE}/visitor/count/${courseId}/${startDate}/${endDate}`,
+      method: 'get'
+    })
   }
 }
