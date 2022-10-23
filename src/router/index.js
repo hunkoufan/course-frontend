@@ -123,13 +123,13 @@ export const constantRoutes = [
         meta: { title: '编辑课程' },
         hidden: true
       },
-      // {
-      //   path: 'course/chapter/:id',
-      //   name: 'CourseChapterEdit',
-      //   component: () => import('@/views/vod/course/form'),
-      //   meta: { title: '编辑大纲' },
-      //   hidden: true
-      // },
+      {
+        path: 'chapter/:id',
+        name: 'CourseChapterEdit',
+        component: () => import('@/views/course/form'),
+        meta: { title: '编辑大纲' },
+        hidden: true
+      },
       {
         path: 'chart/:id',
         name: 'CourseChart',

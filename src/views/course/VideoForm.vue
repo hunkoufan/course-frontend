@@ -34,6 +34,8 @@
 
 <script>
 import videoApi from '@/api/video'
+import vodApi  from '@/api/vod'
+
 export default {
   data() {
     return {
@@ -119,11 +121,13 @@ export default {
     // 视频上传
     submitUpload() {
       this.uploadBtnDisabled = true
-      this.$refs.upload.submit() // 提交上传请求
+      // 提交上传请求
+      this.$refs.upload.submit()
     },
 
     // 视频上传成功的回调
     handleUploadSuccess(response, file, fileList) {
+      this.$message.success(response.message)
       this.uploadBtnDisabled = false
       this.video.videoSourceId = response.data
       this.video.videoOriginalName = file.name
@@ -132,7 +136,7 @@ export default {
     // 失败回调
     handleUploadError() {
       this.uploadBtnDisabled = false
-      this.$message.error('上传失败2')
+      this.$message.error('上传视频失败')
     },
 
     // 删除视频文件确认
@@ -142,8 +146,13 @@ export default {
 
     // 执行视频文件的删除
     handleOnRemove(file, fileList) {
-      if (!this.video.videoSourceId) {
-        return
+      if (this.video.videoSourceId) {
+        vodApi.removeVideoById(this.video.videoSourceId).then(response => {
+          this.$message.success(response.message)
+          this.video.videoSourceId = ''
+          this.video.videoOriginalName = ''
+          videoApi.updateById(this.video)
+        })
       }
     }
   }
