@@ -31,7 +31,7 @@
       </el-form-item>
       <!-- 课程封面 -->
       <el-form-item label="课程封面">
-        <el-upload :show-file-list="false" :on-success="handleCoverSuccess" :before-upload="beforeCoverUpload" :on-error="handleCoverError" :action="BASE_API+'/admin/vod/transfer/upload'" class="cover-uploader">
+        <el-upload :show-file-list="false" :on-success="handleCoverSuccess" :before-upload="beforeCoverUpload" :on-error="handleCoverError" :action="url+'/admin/vod/transfer/upload'" class="cover-uploader">
           <img v-if="courseInfo.cover" :src="courseInfo.cover" alt="课程封面">
           <i v-else class="el-icon-plus avatar-uploader-icon"/>
         </el-upload>
@@ -49,15 +49,15 @@
 </template>
 
 <script>
-import courseApi from '@/api/course'
-import teacherApi from '@/api/teacher'
-import subjectApi from '@/api/subject'
+import courseApi from '@/api/vod/course'
+import teacherApi from '@/api/vod/teacher'
+import subjectApi from '@/api/vod/subject'
+
+import { mapGetters } from 'vuex'
 
 export default {
   data() {
     return {
-      // TODO replace
-      BASE_API: 'http://localhost:8081',
       saveBtnDisabled: false,
       courseInfo: {
         price: 0,
@@ -73,6 +73,9 @@ export default {
       subjectList: [],
       subjectLevelTwoList: []
     }
+  },
+  computed: {
+    ...mapGetters(['url'])
   },
   created() {
     // 判断当前是否是编辑操作
@@ -109,7 +112,7 @@ export default {
     },
 
     // 上传成功回调
-    handleCoverSuccess(res, file) {
+    handleCoverSuccess(res) {
       if (res.data) {
         this.courseInfo.cover = res.data
       }

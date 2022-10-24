@@ -16,9 +16,9 @@
 </template>
 
 <script>
-import Info from '@/views/course/info'
-import Chapter from '@/views/course/chapter'
-import Publish from '@/views/course/publish'
+import Info from '@/views/vod/course/CourseForm'
+import Chapter from '@/views/vod/course/outline/CourseChapterList'
+import Publish from '@/views/vod/course/outline/CoursePublish'
 
 export default {
   components: { Info, Chapter, Publish },

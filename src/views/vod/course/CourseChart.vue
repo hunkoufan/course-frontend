@@ -16,9 +16,11 @@
     </div>
   </div>
 </template>
+
+
 <script>
 import echarts from 'echarts'
-import api from '@/api/video'
+import api from '@/api/vod/video'
 
 export default {
   data() {
@@ -49,7 +51,7 @@ export default {
         }
         this.xData = []
         this.yData = []
-        visitors.forEach((item, index) => {
+        visitors.forEach((item) => {
           this.xData.push(item.joinDate)
           this.yData.push(item.userCount)
         })

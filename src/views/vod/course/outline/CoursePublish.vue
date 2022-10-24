@@ -2,7 +2,7 @@
   <div class="app-container">
     <!--课程预览-->
     <div class="ccInfo">
-      <img :src="coursePublish.cover">
+      <img :src="coursePublish.cover" alt="课程封面">
       <div class="main">
         <h2>{{ coursePublish.title }}</h2>
         <p class="gray"><span>共 {{ coursePublish.lessonNum }} 课时</span></p>
@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import courseApi from '@/api/course'
+import courseApi from '@/api/vod/course'
 
 export default {
   data() {

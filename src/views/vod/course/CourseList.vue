@@ -115,12 +115,11 @@
 </template>
 
 <script>
-import courseApi from '@/api/course'
-import teacherApi from '@/api/teacher'
-import subjectApi from '@/api/subject'
+import courseApi from '@/api/vod/course'
+import teacherApi from '@/api/vod/teacher'
+import subjectApi from '@/api/vod/subject'
 
 export default {
-
   data() {
     return {
       list: [],

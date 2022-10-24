@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import chapterApi from '@/api/chapter'
+import chapterApi from '@/api/vod/chapter'
 
 export default {
   data() {

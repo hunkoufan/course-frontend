@@ -45,10 +45,11 @@
 </template>
 
 <script>
-import chapterApi from '@/api/chapter'
-import videoApi from '@/api/video'
-import ChapterForm from '@/views/course/ChapterForm'
-import VideoForm from '@/views/course/VideoForm'
+import chapterApi from '@/api/vod/chapter'
+import videoApi from '@/api/vod/video'
+
+import ChapterForm from '@/views/vod/course/outline/CourseChapterForm'
+import VideoForm from '@/views/vod/course/outline/CourseVideoForm'
 
 export default {
   components: { ChapterForm, VideoForm },
@@ -115,8 +116,8 @@ export default {
       }).then(() => {
         return videoApi.removeById(videoId)
       }).then(response => {
-        this.fetchNodeList()
         this.$message.success(response.message)
+        this.fetchNodeList()
       }).catch((response) => {
         if (response === 'cancel') {
           this.$message.info('取消删除')

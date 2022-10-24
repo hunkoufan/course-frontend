@@ -17,7 +17,7 @@
 
       <!-- 上传视频 -->
       <el-form-item label="上传视频">
-        <el-upload ref="upload" :auto-upload="false" :on-success="handleUploadSuccess" :on-error="handleUploadError" :on-exceed="handleUploadExceed" :file-list="fileList" :limit="1" :before-remove="handleBeforeRemove" :on-remove="handleOnRemove" :action="BASE_API+'/admin/vod/upload'">
+        <el-upload ref="upload" :auto-upload="false" :on-success="handleUploadSuccess" :on-error="handleUploadError" :on-exceed="handleUploadExceed" :file-list="fileList" :limit="1" :before-remove="handleBeforeRemove" :on-remove="handleOnRemove" :action="url+'/admin/vod/upload'">
           <el-button slot="trigger" size="small" type="primary">选择视频</el-button>
           <el-button :disabled="uploadBtnDisabled" style="margin-left: 10px;" size="small" type="success" @click="submitUpload()">上传</el-button>
         </el-upload>
@@ -33,14 +33,14 @@
 </template>
 
 <script>
-import videoApi from '@/api/video'
-import vodApi  from '@/api/vod'
+import videoApi from '@/api/vod/video'
+import vodApi  from '@/api/vod/vod'
+
+import { mapGetters } from 'vuex'
 
 export default {
   data() {
     return {
-      // TODO replace
-      BASE_API: 'http://localhost:8081',
       dialogVisible: false,
       video: {
         sort: 0,
@@ -50,7 +50,9 @@ export default {
       uploadBtnDisabled: false
     }
   },
-
+  computed: {
+    ...mapGetters(['url'])
+  },
   methods: {
     open(chapterId, videoId) {
       this.dialogVisible = true
@@ -114,7 +116,7 @@ export default {
     },
 
     // 上传多于一个视频
-    handleUploadExceed(files, fileList) {
+    handleUploadExceed() {
       this.$message.warning('想要重新上传视频，请先删除已上传的视频')
     },
 
@@ -126,7 +128,7 @@ export default {
     },
 
     // 视频上传成功的回调
-    handleUploadSuccess(response, file, fileList) {
+    handleUploadSuccess(response, file) {
       this.$message.success(response.message)
       this.uploadBtnDisabled = false
       this.video.videoSourceId = response.data
@@ -140,12 +142,12 @@ export default {
     },
 
     // 删除视频文件确认
-    handleBeforeRemove(file, fileList) {
+    handleBeforeRemove(file) {
       return this.$confirm(`确定移除 ${file.name}？`)
     },
 
     // 执行视频文件的删除
-    handleOnRemove(file, fileList) {
+    handleOnRemove() {
       if (this.video.videoSourceId) {
         vodApi.removeVideoById(this.video.videoSourceId).then(response => {
           this.$message.success(response.message)

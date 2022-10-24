@@ -7,6 +7,7 @@
         <el-button type="primary" @click="exportData">导出</el-button>
       </div>
     </div>
+
     <!-- 数据表格 -->
     <el-table :data="list" style="width: 100%" row-key="id" border lazy :load="lazyLoad"
               :tree-props="{children: 'children', hasChildren: 'hasChildren'}">
@@ -19,7 +20,7 @@
       <el-form label-position="right" label-width="170px">
         <el-form-item label="文件">
           <el-upload :multiple="false" :on-success="onUploadSuccess" class="upload-demo"
-                     :action="contextPath+'/admin/vod/subject/import'">
+                     :action="url+'/admin/vod/subject/import'">
             <el-button size="small" type="primary">点击上传</el-button>
             <div slot="tip" class="el-upload__tip">只能上传 excel 文件，且不超过 500KB</div>
           </el-upload>
@@ -33,16 +34,19 @@
 </template>
 
 <script>
-import api from '@/api/subject'
+import api from '@/api/vod/subject'
+import { mapGetters } from 'vuex'
 
 export default {
   data() {
     return {
-      contextPath: 'http://localhost:8081',
       list: [],
       // 文件选择弹层框是否展示
       dialogImportVisible: false
     }
+  },
+  computed: {
+    ...mapGetters(['url'])
   },
   created() {
     // 获取父级课程分类
@@ -59,7 +63,6 @@ export default {
     // 解析数据，判断是否拥有孩子节点
     resolveChildNode() {
       this.list.forEach((item) => {
-        // TODO 解决多级孩子节点问题
         if (item.parentId === 0) {
           item.hasChildren = true
         }
@@ -72,9 +75,9 @@ export default {
       })
     },
     exportData() {
-      window.open(this.contextPath + '/admin/vod/subject/export')
+      window.open(this.url + '/admin/vod/subject/export')
     },
-    onUploadSuccess(res, file) {
+    onUploadSuccess(res) {
       this.$message.success(res.message)
       this.dialogImportVisible = false
       this.getSubList(0)

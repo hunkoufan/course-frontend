@@ -50,7 +50,7 @@
       <el-table-column label="操作" width="200" align="center">
         <template slot-scope="scope">
           <el-button type="text" size="mini" @click="removeById(scope.row.id)">删除</el-button>
-          <router-link :to="'/vod/teacher/edit/'+scope.row.id">
+          <router-link :to="'/teacher/edit/'+scope.row.id">
             <el-button type="text" size="mini">修改</el-button>
           </router-link>
         </template>
@@ -72,7 +72,7 @@
 </template>
 
 <script>
-import api from '@/api/teacher.js'
+import api from '@/api/vod/teacher.js'
 
 export default {
   name: 'List',
@@ -124,12 +124,12 @@ export default {
       })
     },
     addTeacher() {
-      this.$router.push('/vod/teacher/insert')
+      this.$router.push('/teacher/insert')
     },
     // 教师多选改变事件
     handleSelectionChange(selections) {
       this.idList = []
-      selections.forEach((item, index) => {
+      selections.forEach((item) => {
         this.idList.push(item.id)
       })
     },

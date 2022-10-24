@@ -24,7 +24,7 @@
       </el-form-item>
       <el-form-item label="讲师头像">
         <el-upload :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload" :on-error="handleAvatarError"
-                   :action="contextPath+'/admin/vod/transfer/upload'" :show-file-list="false" class="avatar-uploader">
+                   :action="url+'/admin/vod/transfer/upload'" :show-file-list="false" class="avatar-uploader">
           <img v-if="teacher.avatar" :src="teacher.avatar" alt="讲师头像"/>
           <i v-else class="el-icon-plus avatar-uploader-icon"/>
         </el-upload>
@@ -37,21 +37,22 @@
 </template>
 
 <script>
-import api from '@/api/teacher'
-
+import api from '@/api/vod/teacher'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'Form',
   data() {
     return {
-      // TODO replace
-      contextPath: 'http://localhost:8081',
       teacher: {
         sort: 0,
         level: 1
       },
       saveBtnDisabled: false
     }
+  },
+  computed: {
+    ...mapGetters(['url'])
   },
   created() {
     // 读取路由路径中的 id 值
@@ -73,7 +74,7 @@ export default {
       api.saveTeacher(this.teacher).then(res => {
           this.$message.success(res.message)
           // 跳转到讲师列表页面
-          this.$router.push('/vod/teacher/list')
+          this.$router.push('/teacher/list')
         }
       )
     },
@@ -86,7 +87,7 @@ export default {
       api.updateTeacher(this.teacher).then(res => {
         this.$message.success(res.message)
         // 跳转到讲师列表页面
-        this.$router.push('/vod/teacher/list')
+        this.$router.push('/teacher/list')
       })
     },
     // 头像上传成功
