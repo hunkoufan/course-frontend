@@ -199,6 +199,27 @@ export const constantRoutes = [
     ]
   },
 
+  // wechat
+  {
+    path: '/wechat',
+    component: Layout,
+    redirect: '/wechat/menu/list',
+    name: 'Wechat',
+    meta: {
+      title: '菜单管理',
+      icon: 'el-icon-refrigerator'
+    },
+    alwaysShow: true,
+    children: [
+      {
+        path: 'menu/list',
+        name: 'Menu',
+        component: () => import('@/views/wechat/MenuList'),
+        meta: { title: '菜单列表', icon: 'el-icon-s-help' }
+      }
+    ]
+  },
+
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
 ]
